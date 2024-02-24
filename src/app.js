@@ -9,6 +9,7 @@ const userRoutes = require("./routes/user.Routes.js");
 const authUserRoutes = require("./routes/authUser.Routes.js");
 const authAdminRoutes = require("./routes/authAdmin.Routes.js");
 const pointsRoutes = require("./routes/recyclingcenter.Routes.js")
+const categoryRoutes = require("./routes/categories.Routes")
 
 const cors = require("cors");
 const app = express();
@@ -25,6 +26,7 @@ app.use("/users", userRoutes);
 app.use("/authUser", authUserRoutes);
 app.use("/authAdmin", authAdminRoutes);
 app.use("/recycling-center", pointsRoutes)
+app.use("/categories", categoryRoutes)
 
 app.get("/", (req, res) => {
   res.send("Welcome to my api");
