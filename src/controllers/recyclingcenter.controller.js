@@ -118,6 +118,116 @@ module.exports = {
         }
     },
 
+
+    filterPointsByMaterials: async (req, res) => {
+        try {
+            const { materialIds } = req.query;
+            
+            // Verificar si se proporcionaron identificadores de materiales
+            if (!materialIds) {
+                return res.status(400).json({ error: "Se deben proporcionar identificadores de materiales en la consulta" });
+            }
+            
+            // Convertir los identificadores de materiales en un array
+            const materialsArray = materialIds.split('&');
+            
+            // Verificar si materialsArray es una lista válida de identificadores
+            if (!Array.isArray(materialsArray) || materialsArray.length === 0) {
+                return res.status(400).json({ error: "Se debe proporcionar una lista válida de identificadores de materiales" });
+            }
+            
+            // Buscar los puntos de reciclaje que contengan todos los materiales especificados
+            const puntosReciclaje = await RecyclingCenter.find({ materials: { $all: materialsArray } });
+            
+            if (!puntosReciclaje || puntosReciclaje.length === 0) {
+                return res.status(404).json({ error: "No se encontraron puntos de reciclaje para los materiales especificados" });
+            }
+            
+            res.status(200).json(puntosReciclaje);
+        } catch (error) {
+            console.error("Error al filtrar puntos de reciclaje por materiales:", error);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
+    },
+    
+
+    // filterPointsByMaterials: async (req, res) => {
+    //     try {
+    //         const { materialIds } = req.params;
+    
+    //         // Convertir los identificadores de materiales en una lista
+    //         const materialsArray = materialIds.split('/');
+    
+    //         // Verificar si materialsArray es una lista válida de identificadores
+    //         if (!Array.isArray(materialsArray) || materialsArray.length === 0) {
+    //             return res.status(400).json({ error: "Se debe proporcionar una lista válida de identificadores de materiales" });
+    //         }
+    
+    //         // Buscar los puntos de reciclaje que contengan todos los materiales especificados
+    //         const puntosReciclaje = await RecyclingCenter.find({ materials: { $all: materialsArray } });
+    
+    //         if (!puntosReciclaje || puntosReciclaje.length === 0) {
+    //             return res.status(404).json({ error: "No se encontraron puntos de reciclaje para los materiales especificados" });
+    //         }
+    
+    //         res.status(200).json(puntosReciclaje);
+    //     } catch (error) {
+    //         console.error("Error al filtrar puntos de reciclaje por materiales:", error);
+    //         res.status(500).json({ error: "Error interno del servidor" });
+    //     }
+    // },    
+
+    // filterPointsByMaterials: async (req, res) => {
+    //     try {
+    //         const { materialIds } = req.params;
+    
+    //         // Convertir los identificadores de materiales en una lista
+    //         const materialsArray = materialIds.split('/');
+    
+    //         // Verificar si materialsArray es una lista válida de identificadores
+    //         if (!Array.isArray(materialsArray) || materialsArray.length === 0) {
+    //             return res.status(400).json({ error: "Se debe proporcionar una lista válida de identificadores de materiales" });
+    //         }
+    
+    //         // Buscar los puntos de reciclaje que contengan todos los materiales especificados
+    //         const puntosReciclaje = await RecyclingCenter.find({ materials: { $all: materialsArray } });
+    
+    //         if (!puntosReciclaje || puntosReciclaje.length === 0) {
+    //             return res.status(404).json({ error: "No se encontraron puntos de reciclaje para los materiales especificados" });
+    //         }
+    
+    //         res.status(200).json(puntosReciclaje);
+    //     } catch (error) {
+    //         console.error("Error al filtrar puntos de reciclaje por materiales:", error);
+    //         res.status(500).json({ error: "Error interno del servidor" });
+    //     }
+    // },
+    
+
+    // filterPointsByMaterials: async (req, res) => {
+    //     try {
+    //         const { materialIds } = req.params;
+    
+    //         // Verificar si materialIds es una lista de identificadores
+    //         if (!Array.isArray(materialIds) || materialIds.length === 0) {
+    //             return res.status(400).json({ error: "Se debe proporcionar una lista válida de identificadores de materiales" });
+    //         }
+    
+    //         // Buscar los puntos de reciclaje que contengan todos los materiales especificados
+    //         const puntosReciclaje = await RecyclingCenter.find({ materials: { $all: materialIds } });
+    
+    //         if (!puntosReciclaje || puntosReciclaje.length === 0) {
+    //             return res.status(404).json({ error: "No se encontraron puntos de reciclaje para los materiales especificados" });
+    //         }
+    
+    //         res.status(200).json(puntosReciclaje);
+    //     } catch (error) {
+    //         console.error("Error al filtrar puntos de reciclaje por materiales:", error);
+    //         res.status(500).json({ error: "Error interno del servidor" });
+    //     }
+    // },
+    
+
     editPointById: async (req, res) => {
         try {
             const { id } = req.params;
