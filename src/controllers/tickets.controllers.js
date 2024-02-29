@@ -29,13 +29,12 @@ module.exports = {
         });
       }
 
-      // Calcula los puntos del ticket utilizando la función calcularPuntosPorTicket
-      const pesoTotal = materialesRelacionados.reduce((total, material) => {
-        return total + material.peso;
+
+      const pesoTotal = materialesRelacionados.reduce((total, materialId) => {
+        return total + materialId.valor; // suponiendo que materialId es el ID del material
       }, 0);
 
-      // aaca se convierte el peso en puntos
-      const puntos = calcularPuntosPorTicket(pesoTotal);
+      const puntos = await calcularPuntosPorTicket(materialesRelacionados);
 
       // Crea el nuevo ticket
       const newTicket = new TicketSchema({
@@ -43,8 +42,11 @@ module.exports = {
         descripcionTicket,
         materialesRelacionados,
         CompanyRelacionada: companyId,
+        pesoTotal,
         puntos, // Asigna los puntos calculados al ticket
       });
+
+      // console.log(newTicket)
 
       await newTicket.save();
 

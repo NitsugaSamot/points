@@ -24,10 +24,11 @@ const ticketSchema = new mongoose.Schema({
       ref: "Material",
     },
   ],
-  CompanyRelacionada: {
+  CompanyRelacionada:
+  [ {
     type: mongoose.Schema.Types.ObjectId,
     ref: "RecyclingCompany",
-  },
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
