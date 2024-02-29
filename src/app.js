@@ -16,6 +16,8 @@ const recyclingCompanyRoutes = require("./routes/recyclingcompany.Routes.js");
 const vouchersRoutes = require("./routes/voucher.Routes.js");
 const storesRoutes = require("./routes/stores.Routes.js");
 
+const ticketsRoutes = require("./routes/tickets.Routes.js");
+
 const cors = require("cors");
 const app = express();
 
@@ -39,6 +41,8 @@ app.use("/vouchers", vouchersRoutes);
 app.use("/stores", storesRoutes);
 
 app.use("/categories", categoryRoutes)
+
+app.use("/tickets", ticketsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to my api");
