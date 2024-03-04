@@ -71,6 +71,8 @@ module.exports = {
           // Retorna el tipo de usuario y el token
           return res.status(200).send({
             tokenSession,
+            nombreempresa: company.nombreempresa,
+            emailempresa: company.emailempresa
           });
         } else {
           // Las contraseñas no coinciden, retorna un mensaje de error

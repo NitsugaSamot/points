@@ -32,7 +32,10 @@ module.exports = {
           return res.status(200).send({
             tokenSession,
             isAdmin,
-            puntos: user.puntos
+            puntos: user.puntos,
+            nombre: user.nombre,
+            email: user.email
+
           });
         } else {
           // Las contraseñas no coinciden, retorna un mensaje de error
