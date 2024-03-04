@@ -25,14 +25,14 @@ module.exports = {
           // Genera un token
           const tokenSession = await tokenSign({
             id: user._id,
-            role: user.roles,
-            puntos
+            role: user.roles
           });
 
           // Retorna el tipo de usuario y el token
           return res.status(200).send({
             tokenSession,
             isAdmin,
+            puntos: user.puntos
           });
         } else {
           // Las contraseñas no coinciden, retorna un mensaje de error
