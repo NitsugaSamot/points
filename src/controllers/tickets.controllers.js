@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 const TicketSchema = require("../models/tickets.models.js");
 const StoreSchema = require("../models/stores.models.js");
+const BaseUser = require("../models/base.model.js");
 const {
   Types: { ObjectId },
 } = require("mongoose");
 const { verifyCompanyToken } = require("../helpers/generateToken.js");
-const { calcularPuntosPorTicket } = require("../utils/calcptosporticket.js");
 
 module.exports = {
   CreateTicket: async (req, res) => {
     try {
-      const { titulo, descripcionTicket, materialesRelacionados } = req.body;
+      const { titulo, descripcionTicket, materialesRelacionados, companyRelacionada, usuarioUtilizado, puntos } = req.body;
       const authHeader = req.headers.authorization;
 
       if (!authHeader) {
@@ -30,25 +30,34 @@ module.exports = {
       }
 
 
-      const pesoTotal = materialesRelacionados.reduce((total, materialId) => {
-        return total + materialId.valor; // suponiendo que materialId es el ID del material
-      }, 0);
+      // const pesoTotal = materialesRelacionados.reduce((total, material) => {
+      //   return total + material.peso;
+      // }, 0);
 
-      const puntos = await calcularPuntosPorTicket(materialesRelacionados);
+      // // aaca se convierte el peso en puntos
+      // const puntos = calcularPuntosPorTicket(pesoTotal);
 
       // Crea el nuevo ticket
       const newTicket = new TicketSchema({
         titulo,
         descripcionTicket,
         materialesRelacionados,
-        CompanyRelacionada: companyId,
-        pesoTotal,
+        companyRelacionada,
+        usuarioUtilizado,
         puntos, // Asigna los puntos calculados al ticket
       });
 
       // console.log(newTicket)
 
       await newTicket.save();
+
+    // Sumar los puntos al usuario correspondiente
+    const user = await BaseUser.findById(usuarioUtilizado);
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    user.puntos += puntos; // Suma los puntos del ticket al usuario
+    await user.save();
 
       return res.status(201).json({ message: "Ticket creado exitosamente" });
     } catch (error) {

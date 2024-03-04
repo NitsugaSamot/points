@@ -24,6 +24,16 @@ const baseUserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
+  puntos: {
+    type: Number,
+    default: 0,
+  },
+  vouchers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Voucher",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

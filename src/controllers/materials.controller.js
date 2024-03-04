@@ -11,13 +11,14 @@ module.exports = {
     createMaterial: async (req, res) => {
         try {
             const {
-                nombre,
+                nombrematerial,
                 descripcion,
                 imagen,
+                pesoMaterial,
                 valor,
             } = req.body;
 
-            const materialExistente = await Material.findOne({ nombre });
+            const materialExistente = await Material.findOne({ nombrematerial });
 
             const valorExiste = await Material.findOne({ valor });
 
@@ -31,8 +32,9 @@ module.exports = {
 
 
             const nuevoMaterial = new Material({
-                nombre,
+                nombrematerial,
                 descripcion,
+                pesoMaterial,
                 imagen,
                 valor,
             });
@@ -91,9 +93,10 @@ module.exports = {
         try {
             const { id } = req.params;
             const {
-                nombre,
+                nombrematerial,
                 descripcion,
                 imagen,
+                pesoMaterial,
                 valor,
             } = req.body;
 
@@ -104,9 +107,10 @@ module.exports = {
             }
 
             // Actualizar los campos editables
-            materialExistente.nombre = nombre;
+            materialExistente.nombrematerial = nombrematerial;
             materialExistente.descripcion = descripcion;
             materialExistente.imagen = imagen;
+            materialExistente.pesoMaterial = pesoMaterial,
             materialExistente.valor = valor;
 
             // Guardar los cambios

@@ -24,7 +24,7 @@ module.exports = {
             // Buscar los nombres y IDs de los materiales
             const materialDetails = await Material.find({ _id: { $in: materials } });
     
-            const materialInfo = materialDetails.map(material => ({ _id: material._id, nombre: material.nombre }));
+            const materialInfo = materialDetails.map(material => ({ _id: material._id, nombre: material.nombrematerial }));
     
             const nuevoPunto = new RecyclingCenter({
                 nombre,
@@ -94,7 +94,7 @@ module.exports = {
             const { materialName } = req.params;
     
             // Buscar los puntos de reciclaje que contengan el material específico
-            const puntosReciclaje = await RecyclingCenter.find({ "materials.nombre": materialName });
+            const puntosReciclaje = await RecyclingCenter.find({ "materials.nombrematerial": materialName });
     
             if (!puntosReciclaje || puntosReciclaje.length === 0) {
                 return res.status(404).json({ error: "No se encontraron puntos de reciclaje para el material especificado" });

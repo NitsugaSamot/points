@@ -29,6 +29,9 @@ const ticketSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "RecyclingCompany",
   }],
+  puntos: {
+    type: Number
+  },
   createdAt: {
     type: Date,
     default: Date.now,
