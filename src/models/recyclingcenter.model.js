@@ -13,7 +13,7 @@ const recyclingcenterSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Material"
     },
-    nombre: String
+    nombrematerial: String
   }],
   imagen: {
     type: String,

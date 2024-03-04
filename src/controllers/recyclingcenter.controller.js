@@ -24,7 +24,7 @@ module.exports = {
             // Buscar los nombres y IDs de los materiales
             const materialDetails = await Material.find({ _id: { $in: materials } });
     
-            const materialInfo = materialDetails.map(material => ({ _id: material._id, nombre: material.nombrematerial }));
+            const materialInfo = materialDetails.map(material => ({ _id: material._id, nombrematerial: material.nombrematerial }));
     
             const nuevoPunto = new RecyclingCenter({
                 nombre,
